@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emily Yu</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{overflow-x:hidden;max-width:100%;}
+body{overflow-x:hidden;max-width:100%;}
+:root{
+  --ink:#0D0C0A;
+  --paper:#F5F2EB;
+  --paper-dark:#EAE6DC;
+  --red:#C4321A;
+  --gray:#888075;
+  --gray-light:#D6D1C7;
+  --display:'Bebas Neue',sans-serif;
+  --serif:'DM Serif Display',serif;
+  --mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--mono);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.6;cursor:crosshair;}
+
+@media (max-width:768px){
+  nav{padding:0 20px;flex-direction:row;height:52px;align-items:center;justify-content:space-between;}
+  .nav-logo{font-size:18px;}
+  .nav-links{display:none!important;}
+  .hamburger{display:flex!important;}
+
+  #mobile-menu{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:var(--ink);
+    z-index:999;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+  }
+  #mobile-menu.open{display:flex;}
+  #mobile-menu a{
+    font-family:var(--display);
+    font-size:48px;
+    letter-spacing:0.06em;
+    color:var(--paper);
+    text-decoration:none;
+    padding:20px 0;
+    border-bottom:1px solid rgba(245,242,235,0.15);
+    width:100%;
+    text-align:center;
+    transition:color 0.15s;
+  }
+  #mobile-menu a:hover{color:var(--red);}
+  #mobile-menu-close{
+    position:absolute;
+    top:20px;right:20px;
+    background:none;
+    border:none;
+    color:var(--paper);
+    font-size:28px;
+    cursor:pointer;
+  }
+
+  .hero{grid-template-columns:1fr 1fr!important;min-height:auto;width:100%;overflow:hidden;}
+  .hero-left{padding:16px 10px;border-right:3px solid var(--ink);}
+  .hero-right{min-height:220px;}
+  .hero-name{font-size:clamp(22px,7vw,44px)!important;}
+  .hero-subname{font-size:clamp(9px,2.5vw,14px)!important;}
+  .hero-bio{font-size:8.5px!important;padding-left:8px;}
+  .btn-ink,.btn-outline{font-size:7px!important;padding:6px 8px!important;}
+  .hero-caption{font-size:7px;}
+  
+  .work-header{grid-template-columns:1fr;}
+  .work-header-left{border-right:none;border-bottom:3px solid var(--ink);}
+  .work-header-right{padding:24px;}
+  
+  .panels-grid{grid-template-columns:1fr!important;}
+  .panel{border-right:none!important;}
+  
+  .about{grid-template-columns:1fr;min-height:auto;}
+  .about-panel-left{border-right:none;border-bottom:3px solid var(--ink);padding:40px 24px;}
+  .about-panel-right{padding:40px 24px;}
+  .about-big{font-size:clamp(32px,10vw,56px)!important;}
+  
+  .exp-header{flex-direction:column;gap:12px;align-items:flex-start;}
+  .exp-row{grid-template-columns:1fr;gap:4px;padding:16px 24px;}
+  .exp-year{text-align:left;}
+  
+  .contact{grid-template-columns:1fr;}
+  .contact-left{border-right:none;border-bottom:3px solid var(--ink);padding:40px 24px;}
+  .contact-right{padding:40px 24px;}
+  .contact-headline{font-size:clamp(48px,14vw,80px)!important;}
+  
+  .cs-hero{grid-template-columns:1fr;}
+  .cs-hero-img{border-right:none;border-bottom:3px solid var(--ink);min-height:300px;}
+  .cs-hero-info{padding:32px 24px;}
+  .cs-title{font-size:clamp(36px,10vw,64px)!important;}
+  
+  #cs-process-row{grid-template-columns:1fr!important;}
+  
+  footer{padding:16px 24px;flex-direction:column;gap:8px;text-align:center;}
+}
+
+@media (min-width:1600px){
+  body{font-size:17px;}
+  .nav-logo{font-size:28px!important;}
+  .nav-links a{font-size:13px!important;}
+  .hero-name{font-size:clamp(80px,9vw,140px)!important;}
+  .hero-bio{font-size:15px!important;}
+  .about-big{font-size:clamp(42px,5vw,80px)!important;}
+  .section-title{font-size:clamp(56px,6vw,90px)!important;}
+  .exp-title{font-size:clamp(48px,5vw,80px)!important;}
+  .contact-headline{font-size:clamp(60px,7vw,110px)!important;}
+  .work-note{font-size:20px!important;max-width:340px!important;}
+  .panel-desc{font-size:14px!important;}
+  .about-body{font-size:16px!important;}
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--ink);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 40px;height:52px;
+  border-bottom:3px solid var(--ink);
+}
+.nav-logo{font-family:var(--display);font-size:24px;color:var(--paper);letter-spacing:0.08em;}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links li{border-left:1px solid rgba(245,242,235,0.15);}
+.nav-links a{
+  display:block;padding:0 20px;line-height:52px;
+  font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(245,242,235,0.6);text-decoration:none;transition:color 0.15s,background 0.15s;
+}
+.nav-links a:hover{color:var(--paper);background:var(--red);}
+
+.hero{
+  min-height:100vh;padding-top:52px;
+  display:grid;grid-template-columns:38fr 62fr;
+  border-bottom:3px solid var(--ink);
+}
+.hero-left{
+  border-right:3px solid var(--ink);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:48px 40px;position:relative;background:var(--paper);overflow:hidden;
+}
+.hero-left::before{
+  content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(13,12,10,0.04) 8px,rgba(13,12,10,0.04) 9px);
+  pointer-events:none;
+}
+.hero-issue{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gray);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.hero-issue::before{content:'';display:block;width:24px;height:2px;background:var(--red);}
+.hero-name{font-family:var(--display);font-size:clamp(72px,12vw,140px);line-height:0.88;letter-spacing:0.02em;color:var(--ink);margin-bottom:4px;}
+.hero-name-red{color:var(--red);}
+.hero-subname{font-family:var(--serif);font-size:clamp(20px,3vw,36px);font-style:italic;color:var(--gray);margin-bottom:40px;letter-spacing:-0.01em;}
+.hero-bio{font-size:13px;line-height:1.8;color:var(--ink);max-width:380px;margin-bottom:36px;border-left:3px solid var(--red);padding-left:16px;}
+.cta-row{display:flex;gap:12px;align-items:center;}
+.btn-ink{background:var(--ink);color:var(--paper);padding:13px 24px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:2px solid var(--ink);transition:background 0.15s,color 0.15s;display:inline-block;}
+.btn-ink:hover{background:var(--red);border-color:var(--red);}
+.btn-outline{color:var(--ink);padding:13px 24px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:2px solid var(--ink);transition:background 0.15s;display:inline-block;}
+.btn-outline:hover{background:var(--paper-dark);}
+
+.hero-right{background:var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-img{width:100%;height:100%;object-fit:cover;opacity:0.88;mix-blend-mode:luminosity;filter:contrast(1.15);}
+.hero-caption{position:absolute;bottom:24px;left:24px;right:24px;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,242,235,0.5);border-top:1px solid rgba(245,242,235,0.2);padding-top:12px;}
+
+.strip{background:var(--red);display:flex;overflow:hidden;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);}
+.strip-track{display:flex;animation:strip 20s linear infinite;white-space:nowrap;}
+.strip-item{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--paper);padding:14px 28px;flex-shrink:0;}
+.strip-sep{color:rgba(245,242,235,0.4);margin:0 4px;}
+@keyframes strip{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+.work{padding:0;border-bottom:3px solid var(--ink);}
+.work-header{display:grid;grid-template-columns:38fr 62fr;border-bottom:3px solid var(--ink);}
+.work-header-left{padding:40px;border-right:3px solid var(--ink);}
+.section-num{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-num::before{content:'';display:block;width:20px;height:2px;background:var(--red);}
+.section-title{font-family:var(--display);font-size:clamp(48px,7vw,80px);line-height:0.9;letter-spacing:0.02em;}
+.work-header-right{padding:40px;display:flex;align-items:flex-end;}
+.work-note{font-size:18px;line-height:1.8;color:var(--gray);max-width:280px;}
+
+.panels-grid{display:grid;grid-template-columns:1fr 1fr 1fr;}
+.panel{border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);cursor:pointer;position:relative;overflow:hidden;}
+.panel:last-child{border-right:none;}
+.panel:hover .panel-overlay{opacity:1;}
+.panel-thumb{width:100%;height:400px;background:var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.panel-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.panel-thumb img{width:100%;height:100%;object-fit:cover;filter:contrast(1.1) grayscale(0.3);transition:transform 0.4s,filter 0.3s;}
+.panel:hover .panel-thumb img{transform:scale(1.04);filter:contrast(1.2) grayscale(0);}
+.panel-overlay{position:absolute;inset:0;background:rgba(196,50,26,0.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s;}
+.overlay-label{font-family:var(--display);font-size:28px;letter-spacing:0.1em;color:var(--paper);text-align:center;padding:20px;}
+.panel-meta{padding:20px 24px 24px;background:var(--paper);border-top:3px solid var(--ink);}
+.panel-tag{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+.panel-title{font-family:var(--serif);font-size:20px;letter-spacing:-0.01em;margin-bottom:6px;font-style:italic;}
+.panel-desc{font-size:12px;color:var(--gray);line-height:1.7;}
+
+.panel-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--paper-dark);}
+.placeholder-icon{font-size:36px;opacity:0.2;}
+.placeholder-txt{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--gray);text-transform:uppercase;}
+
+/* Case study overlay */
+.cs-overlay{position:fixed;inset:0;z-index:500;background:var(--paper);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.cs-overlay.open{opacity:1;pointer-events:all;}
+.cs-nav{position:sticky;top:0;background:var(--ink);display:flex;justify-content:space-between;align-items:center;padding:0 40px;height:52px;z-index:10;}
+.cs-back{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,242,235,0.6);cursor:pointer;background:none;border:none;display:flex;align-items:center;gap:8px;transition:color 0.15s;}
+.cs-back:hover{color:var(--red);}
+.cs-nav-title{font-family:var(--display);font-size:20px;color:var(--paper);letter-spacing:0.08em;}
+.cs-hero{display:grid;grid-template-columns:63fr 37fr;min-height:70vh;border-bottom:3px solid var(--ink);}
+.cs-hero-img{background:var(--ink);display:flex;align-items:center;justify-content:center;border-right:3px solid var(--ink);overflow:hidden;}
+.cs-hero-img img{width:100%;height:100%;object-fit:cover;}
+.cs-placeholder{width:100%;height:100%;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:var(--paper-dark);}
+.cs-placeholder-txt{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--gray);text-transform:uppercase;}
+.cs-hero-info{padding:60px 48px;display:flex;flex-direction:column;justify-content:flex-end;}
+.cs-tag{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.cs-title{font-family:var(--display);font-size:clamp(48px,7vw,96px);line-height:0.88;letter-spacing:0.02em;margin-bottom:24px;}
+.cs-desc{font-size:14px;line-height:1.9;color:var(--ink);max-width:480px;border-left:3px solid var(--red);padding-left:20px;}
+.cs-images{padding:60px 40px;display:grid;grid-template-columns:1fr 1fr;gap:3px;border-bottom:3px solid var(--ink);}
+.cs-img-block{background:var(--paper-dark);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.cs-img-block img{width:100%;height:100%;object-fit:cover;}
+.cs-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+.cs-img-placeholder-icon{font-size:28px;opacity:0.15;}
+.cs-img-placeholder-txt{font-size:9px;font-weight:700;letter-spacing:0.1em;color:var(--gray);text-transform:uppercase;}
+.cs-footer-row{display:flex;justify-content:flex-end;padding:32px 40px;}
+.cs-close-btn{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:2px solid var(--ink);padding:12px 24px;cursor:pointer;transition:background 0.15s;}
+.cs-close-btn:hover{background:var(--red);border-color:var(--red);}
+
+.about{display:grid;grid-template-columns:38fr 62fr;border-bottom:3px solid var(--ink);min-height:60vh;}
+.about-panel-left{border-right:3px solid var(--ink);background:var(--ink);color:var(--paper);padding:60px 40px;display:flex;flex-direction:column;justify-content:space-between;}
+.about-big{font-family:var(--display);font-size:clamp(36px,5.5vw,72px);line-height:0.92;letter-spacing:0.02em;}
+.about-big span{color:var(--red);}
+.about-panel-right{padding:60px 40px;display:flex;flex-direction:column;justify-content:space-between;}
+.about-body{font-size:14px;line-height:1.9;color:var(--ink);margin-bottom:40px;}
+.skills-table{width:100%;border-collapse:collapse;}
+.skills-table td{font-size:12px;padding:10px 0;border-top:1px solid var(--gray-light);vertical-align:top;}
+.skills-table td:first-child{font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-size:10px;color:var(--red);width:110px;padding-right:16px;}
+.skills-table td:last-child{color:var(--gray);}
+
+.exp{padding:0;border-bottom:3px solid var(--ink);}
+.exp-header{background:var(--paper-dark);padding:40px;border-bottom:3px solid var(--ink);display:flex;justify-content:space-between;align-items:flex-end;}
+.exp-title{font-family:var(--display);font-size:clamp(40px,6vw,72px);letter-spacing:0.02em;}
+.exp-list{display:flex;flex-direction:column;}
+.exp-row{display:grid;grid-template-columns:1fr 1fr 120px;padding:20px 40px;border-bottom:1px solid var(--gray-light);align-items:center;transition:background 0.15s;}
+.exp-row:hover{background:var(--paper-dark);}
+.exp-role{font-weight:700;font-size:13px;margin-bottom:3px;}
+.exp-org{font-size:12px;color:var(--gray);}
+.exp-type{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);}
+.exp-year{font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--gray);text-align:right;}
+
+.contact{display:grid;grid-template-columns:38fr 62fr;min-height:50vh;}
+.contact-left{background:var(--red);color:var(--paper);padding:60px 40px;border-right:3px solid var(--ink);display:flex;flex-direction:column;justify-content:center;}
+.contact-headline{font-family:var(--display);font-size:clamp(52px,8vw,96px);line-height:0.88;letter-spacing:0.02em;margin-bottom:24px;}
+.contact-sub{font-size:13px;line-height:1.8;color:rgba(245,242,235,0.75);}
+.contact-right{padding:60px 40px;display:flex;flex-direction:column;justify-content:center;gap:0;}
+.contact-link-row{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--gray-light);text-decoration:none;color:var(--ink);transition:color 0.15s,padding-left 0.15s;font-size:13px;font-weight:700;}
+.contact-link-row:hover{color:var(--red);padding-left:8px;}
+.contact-link-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.contact-arrow{font-size:20px;}
+
+footer{background:var(--ink);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;}
+footer p{font-size:11px;color:rgba(245,242,235,0.3);letter-spacing:0.06em;}
+.hamburger{display:none;}
+#mobile-menu{display:none;}
+.footer-sig{font-family:var(--display);font-size:20px;color:var(--paper);letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Emily Yu</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#exp">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" style="background:none;border:none;color:var(--paper);font-size:22px;cursor:pointer;padding:0;">☰</button>
+</nav>
+
+<div id="mobile-menu">
+  <button id="mobile-menu-close">✕</button>
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#exp">Experience</a>
+  <a href="#contact">Contact</a>
+</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-name">EMILY<br><span class="hero-name-red">YU</span></div>
+    <div class="hero-subname">Designer & Illustrator</div>
+    <p class="hero-bio">I connect art, storytelling, and human connection through mixed media design.</p>
+    <div class="cta-row">
+      <a href="#work" class="btn-ink">Work</a>
+      <a href="#contact" class="btn-outline">Contact →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-caption">Selected work — "I Rest My Eyes" / "I Haven't Felt So Awake" — ink on paper</div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span class="strip-item">Brand Identity <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Illustration <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Product Design <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Editorial <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Children's Books <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Print Production <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Visual Systems <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Storyboarding <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Brand Identity <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Illustration <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Product Design <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Editorial <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Children's Books <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Print Production <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Visual Systems <span class="strip-sep">✦</span></span>
+    <span class="strip-item">Storyboarding <span class="strip-sep">✦</span></span>
+  </div>
+</div>
+
+<section class="work" id="work">
+  <div class="work-header">
+    <div class="work-header-left">
+      <div class="section-title">SELECTED<br>WORK</div>
+    </div>
+    <div class="work-header-right">
+      <p class="work-note">Four projects. Each a different medium, same obsession with making complexity feel human.</p>
+    </div>
+  </div>
+
+  <div class="panels-grid" style="grid-template-columns:38fr 62fr;">
+
+    <div class="panel" onclick="openCS('rest')">
+      <div class="panel-thumb">
+        <img src="images/Rest.png" alt="Rest — ink comic" style="object-fit:contain;background:white;" onerror="this.parentElement.innerHTML='<div class=panel-placeholder><div class=placeholder-icon>✦</div><div class=placeholder-txt>Add Your Work</div></div>'"/>
+        <div class="panel-overlay"><div class="overlay-label">VIEW<br>PROJECT</div></div>
+      </div>
+      <div class="panel-meta">
+        <div class="panel-tag">Ink · Sequential · Editorial</div>
+        <div class="panel-title">Rest</div>
+        <p class="panel-desc">A surrealist comic exploring the emotional life we build within dreams and the unexplored aspects of the human condition they reveal. It reflects on how rest and dreaming uncover parts of ourselves that remain inaccessible in waking life.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="border-right:none;" onclick="openCS('ofrenda')">
+      <div class="panel-thumb">
+        <img src="images/La_Ofrenda.png" alt="La Ofrenda still life" style="object-fit:contain;background:var(--paper);" onerror="this.parentElement.innerHTML='<div class=panel-placeholder><div class=placeholder-icon>✦</div><div class=placeholder-txt>Add Your Work</div></div>'"/>
+        <div class="panel-overlay"><div class="overlay-label">VIEW<br>PROJECT</div></div>
+      </div>
+      <div class="panel-meta">
+        <div class="panel-tag">Still Life · Digital Painting · Mixed Media</div>
+        <div class="panel-title">La Ofrenda</div>
+        <p class="panel-desc">A still life study inspired by an ofrenda display at a Día de los Muertos celebration in Venice, hosted by SPARC. Wide brushstrokes left intentionally unblended evoke the soft edges of fading memory.</p>
+      </div>
+    </div>
+
+    <div class="panel" onclick="openCS('landscape')" style="border-top:3px solid var(--ink);">
+      <div class="panel-thumb">
+        <img src="images/EEB_136_Landscape_Design.png" alt="Stone Canyon Creek landscape design" style="object-fit:contain;background:var(--paper-dark);" onerror="this.parentElement.innerHTML='<div class=panel-placeholder><div class=placeholder-icon>✦</div><div class=placeholder-txt>Add Your Work</div></div>'"/>
+        <div class="panel-overlay"><div class="overlay-label">VIEW<br>PROJECT</div></div>
+      </div>
+      <div class="panel-meta">
+        <div class="panel-tag">Landscape Design · Ecological Restoration · Illustration</div>
+        <div class="panel-title">Stone Canyon Creek</div>
+        <p class="panel-desc">A native plant restoration design for land adjacent to UCLA's Anderson Building, translating ecological field research into a hand-annotated spatial plan using custom plant icons and companion complex theory.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="border-right:none;border-top:3px solid var(--ink);" onclick="openCS('thread')">
+      <div class="panel-thumb">
+        <img src="images/TBT_Final.png" alt="Thread by Thread illustration" style="object-fit:cover;object-position:center bottom;" onerror="this.parentElement.innerHTML='<div class=panel-placeholder><div class=placeholder-icon>✦</div><div class=placeholder-txt>Add Your Work</div></div>'"/>
+        <div class="panel-overlay"><div class="overlay-label">VIEW<br>PROJECT</div></div>
+      </div>
+      <div class="panel-meta">
+        <div class="panel-tag">Illustration · Storytelling</div>
+        <div class="panel-title">Thread by Thread</div>
+        <p class="panel-desc">Blending impressionist textures and cubist-inspired character design, we explored the emotional journey of overcoming cancer. Through these visual techniques, we evoked feelings of resilience, anxiety, and perseverance for Pages for Pediatrics' mission to alleviate patient anxiety.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-panel-left">
+    <div class="about-big">SEE THROUGH YOUR<br>EYES,<br><span>CONNECT WITH YOUR<br>HEART.</span></div>
+    <div style="font-size:12px;color:rgba(245,242,235,0.35);line-height:1.8;margin-top:40px;">B.S. Biology, UCLA · Dean's List · 2025<br>Adobe CC · Procreate · Illustrator · InDesign<br>Los Angeles, CA — Open to Remote</div>
+  </div>
+  <div class="about-panel-right">
+    <div>
+      <p class="about-body">I'm Emily — a UCLA Biology grad who's spent the last four years pioneering storytelling from early ideas and concepts into finished visual products through illustration and design.<br><br>My background in biology and psychology taught me to pay attention to how humans think, feel, and connect. Through illustration and design, I create stories that carry both experiences and emotional resonance.<br><br>I hope to contribute my perspective and storytelling approach to teams and brands with meaningful ideas to share. If my work connects with your mission, I'd love to be part of the journey.</p>
+    </div>
+    <table class="skills-table">
+      <tr><td>Craft</td><td>Illustration, storyboarding, composition, shape language, color theory</td></tr>
+      <tr><td>Design</td><td>Brand identity, visual systems, print production, editorial layout, UI</td></tr>
+      <tr><td>Tools</td><td>Adobe Illustrator, Photoshop, InDesign, Procreate, Canva, Figma</td></tr>
+      <tr><td>Also</td><td>Conversational Mandarin & Spanish · CapCut · Microsoft Office</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="exp" id="exp">
+  <div class="exp-header">
+    <div>
+      <div class="exp-title">EXPERIENCE</div>
+    </div>
+    
+  </div>
+  <div class="exp-list">
+    <div class="exp-row">
+      <div><div class="exp-role">Creative Director, President</div><div class="exp-org">Pages for Pediatrics @ UCLA</div></div>
+      <div class="exp-type">Illustration · Brand · Print</div>
+      <div class="exp-year">2022 — 2025</div>
+    </div>
+    <div class="exp-row">
+      <div><div class="exp-role">Creative Director</div><div class="exp-org">Thread by Thread</div></div>
+      <div class="exp-type">Illustration · Storytelling</div>
+      <div class="exp-year">2023 — 2024</div>
+    </div>
+    <div class="exp-row">
+      <div><div class="exp-role">Media Intern</div><div class="exp-org">Taiwanese American Student Association</div></div>
+      <div class="exp-type">Brand · Culture · Social</div>
+      <div class="exp-year">Jan — Mar 2023</div>
+    </div>
+    <div class="exp-row">
+      <div><div class="exp-role">Chief of Graphic Design</div><div class="exp-org">Forevergreen Magazine</div></div>
+      <div class="exp-type">Editorial · Web · Print</div>
+      <div class="exp-year">Jan — May 2021</div>
+    </div>
+    <div class="exp-row" style="border-bottom:none;">
+      <div><div class="exp-role">B.S. Biology — Dean's List</div><div class="exp-org">University of California, Los Angeles</div></div>
+      <div class="exp-type">Education</div>
+      <div class="exp-year">2025</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="contact-headline">LET'S<br>MAKE<br>SOME<br>THING.</div>
+    <p class="contact-sub">Open to design internships, brand projects, and freelance illustration commissions. Based in Los Angeles.</p>
+  </div>
+  <div class="contact-right">
+    <a href="mailto:yuemily@g.ucla.edu" class="contact-link-row">
+      <div><div class="contact-link-label">Email</div>yuemily@g.ucla.edu</div>
+      <span class="contact-arrow">→</span>
+    </a>
+    <a href="https://www.linkedin.com/in/emilyjyuu/" target="_blank" class="contact-link-row">
+      <div><div class="contact-link-label">LinkedIn</div>/in/emilyjyuu</div>
+      <span class="contact-arrow">→</span>
+    </a>
+    <a href="tel:6268331818" class="contact-link-row">
+      <div><div class="contact-link-label">Phone</div>(626) 833-1818</div>
+      <span class="contact-arrow">→</span>
+    </a>
+    <div class="contact-link-row" style="cursor:default;opacity:0.4;">
+      <div><div class="contact-link-label">Portfolio / Behance</div>Add your URL here</div>
+      <span class="contact-arrow">+</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-sig">Emily Yu</div>
+  <p>© 2025 · Designer & Illustrator · Los Angeles, CA</p>
+</footer>
+
+</body>
+</html>
+
+<!-- Case Study Overlay -->
+<div class="cs-overlay" id="cs-overlay">
+  <div class="cs-nav">
+    <button class="cs-back" onclick="closeCS()">← Back to Work</button>
+    <div class="cs-nav-title">Emily Yu</div>
+  </div>
+  <div class="cs-hero">
+    <div class="cs-hero-img" id="cs-img">
+      <div class="cs-placeholder"><div class="cs-placeholder-txt">Add your image here</div></div>
+    </div>
+    <div class="cs-hero-info">
+      <div class="cs-tag" id="cs-tag"></div>
+      <div class="cs-title" id="cs-title"></div>
+      <div class="cs-desc" id="cs-desc"></div>
+    </div>
+  </div>
+
+  <div id="cs-process-row" style="display:none;grid-template-columns:1fr 1fr;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);">
+    <div style="padding:40px;display:flex;flex-direction:column;justify-content:center;border-right:3px solid var(--ink);">
+      <div id="cs-process-label" style="font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);margin-bottom:12px;"></div>
+      <div id="cs-process-title" style="font-family:var(--serif);font-size:22px;font-style:italic;margin-bottom:12px;"></div>
+      <p id="cs-process-note" style="font-size:13px;line-height:1.8;color:var(--gray);"></p>
+    </div>
+    <div id="cs-process-img" style="aspect-ratio:1;overflow:hidden;background:var(--paper-dark);"></div>
+  </div>
+
+  <div class="cs-footer-row">
+    <button class="cs-close-btn" onclick="closeCS()">← Back to Portfolio</button>
+  </div>
+</div>
+<script>
+const projects = {
+  rest: {
+    tag: 'Ink · Sequential · Editorial',
+    title: 'REST',
+    desc: 'A surrealist comic exploring the emotional life we build within dreams and the unexplored aspects of the human condition they reveal. It reflects on how rest and dreaming uncover parts of ourselves that remain inaccessible in waking life.',
+    img: 'images/Rest.png'
+  },
+  pediatrics: {
+    tag: "Illustration · Print · Children's Book",
+    title: 'PAGES FOR PEDIATRICS',
+    desc: '50+ visual formats educating 200+ children on pediatric conditions. Full brand system and print production at UCLA.',
+    img: 'images/Sunset_color.png'
+  },
+  thread: {
+    tag: 'Illustration · Storytelling',
+    title: 'THREAD BY THREAD',
+    desc: "Blending impressionist textures and cubist-inspired character design, we explored the emotional journey of overcoming cancer. Through these visual techniques, we evoked feelings of resilience, anxiety, and perseverance for Pages for Pediatrics' mission to alleviate patient anxiety.",
+    img: 'images/TBT_Final.png',
+    processImg: 'images/TBT_Sketch_12.png'
+  },
+  ofrenda: {
+    tag: 'Still Life · Digital Painting · Mixed Media',
+    title: 'LA OFRENDA',
+    desc: "A still life study inspired by an ofrenda display at a Día de los Muertos celebration in Venice, hosted by SPARC (Social and Public Art Resource Center). Built through a process of edged and curved shapes layered into organic forms, the piece explores how everyday objects — flowers, candlelight, and coins — carry the weight of ritual and memory. Wide brushstrokes left intentionally unblended allow colors to bleed into one another, evoking the soft edges of fading memory and the nostalgic warmth of honoring those we've lost.",
+    img: 'images/La_Ofrenda.png',
+    processImg: 'images/La_Ofrenda_Construction.png'
+  },
+  landscape: {
+    tag: 'Landscape Design · Ecological Restoration · Illustration',
+    title: 'STONE CANYON CREEK',
+    desc: "We often move through nature without noticing it — walking paths, cutting across lawns, passing plants we've never learned the names of. Stone Canyon Creek runs through UCLA's campus, quietly present beneath the feet of students, faculty, and visitors every day. This project is rooted in the belief that we are not separate from the ecosystems around us — we are part of them. Restoring this plot is not just an ecological act, but a human one: an invitation to reconnect with the living landscape we share.\n\nA restoration design for land adjacent to UCLA's Anderson Building, developed for EEB 136: Restoration Ecology. The design integrates 15 native and 4 nonnative species selected with careful consideration of soil health, water needs, sunlight requirements, and plant companions. Central to the design is the concept of the 'companion complex' — a self-sustaining cluster of mutually beneficial plants designed to support biodiversity and ecological resilience. The illustrated plan balances scientific rigor with a visual language rooted in ecological restoration, using custom plant icons and a hand-annotated map to communicate the spatial logic of the restoration.",
+    img: 'images/EEB_136_Landscape_Design.png',
+    processImg: 'images/EEB_136_Companion_Complexes.png'
+  }
+};
+
+function openMenu() {
+  document.getElementById('mobile-menu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openCS(key) {
+  const p = projects[key];
+  document.getElementById('cs-tag').textContent = p.tag;
+  document.getElementById('cs-title').textContent = p.title;
+  document.getElementById('cs-desc').textContent = p.desc;
+  const imgEl = document.getElementById('cs-img');
+  imgEl.innerHTML = '<img src="' + p.img + '" onerror="this.parentElement.innerHTML=\'<div class=cs-placeholder><div class=cs-placeholder-txt>Add your image here</div></div>\'" />';
+
+  // Process image row
+  const processRow = document.getElementById('cs-process-row');
+  if (p.processImg) {
+    processRow.style.display = 'grid';
+    const processLabel = key === 'landscape' ? 'Companion Complex' : 'Process';
+    const processTitle = key === 'landscape' ? 'Companion Complex Slide' : key === 'thread' ? 'From Sketch to Final' : 'Construction Sketch';
+    const processNote = key === 'landscape'
+      ? 'A companion plant is a species that, when grown in proximity to another, mutually support growth, health, and resilience — through shared nutrients, pollinator attraction, or shared soil drainage. The Toyon serves as the anchor of the complex, with surrounding species selected for how they support it and each other.'
+      : key === 'thread'
+      ? 'The sketch captures the quiet intimacy of the scene in its earliest form — two figures, a child between them, rendered in light pencil lines. The final illustration layers warm color and texture over that foundation, using impressionist brushwork to evoke the emotional warmth of human connection.'
+      : 'Using red for edges and planes, blue for curved organic forms, and green for structural perspective lines — each shape was built up methodically before color was applied.';
+    document.getElementById('cs-process-label').textContent = processLabel;
+    document.getElementById('cs-process-title').textContent = processTitle;
+    document.getElementById('cs-process-note').textContent = processNote;
+    document.getElementById('cs-process-img').innerHTML = '<img src="' + p.processImg + '" style="width:100%;height:100%;object-fit:cover;" />';
+  } else {
+    processRow.style.display = 'none';
+  }
+
+  const overlay = document.getElementById('cs-overlay');
+  overlay.classList.add('open');
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCS() {
+  document.getElementById('cs-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCS();
+});
+
+// Hamburger menu
+var hamburgerBtn = document.querySelector('.hamburger');
+var mobileMenu = document.getElementById('mobile-menu');
+var closeBtn = document.getElementById('mobile-menu-close');
+var menuLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : [];
+
+if (hamburgerBtn) {
+  hamburgerBtn.addEventListener('click', function() {
+    mobileMenu.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+}
+if (closeBtn) {
+  closeBtn.addEventListener('click', function() {
+    mobileMenu.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+}
+menuLinks.forEach(function(link) {
+  link.addEventListener('click', function() {
+    mobileMenu.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+});
+</script>
+
+</body>
+</html>
